@@ -4,19 +4,19 @@
  * WP-Reactivate
  *
  *
- * @package   Lumi Reviews Plugin
+ * @package   Reviews Plugin
  * @author    PB
  * @license   GPL-3.0
- * @link      https://goPB.com
- * @copyright 2017 PB (Pty) Ltd
+ * @link      https://patrykbejcer.pl
+ * @copyright 2019 PB
  *
  * @wordpress-plugin
- * Plugin Name:       Lumi Reviews Plugin
- * Plugin URI:        https://goPB.com
- * Description:       React boilerplate for WordPress plugins
+ * Plugin Name:       Reviews Plugin
+ * Plugin URI:        https://patrykbejcer.pl
+ * Description:       Reviews plugin for wordpress.
  * Version:           1.0.2
  * Author:            PB
- * Author URI:        https://goPB.com
+ * Author URI:        https://patrykbejcer.pl
  * Text Domain:       wp-reactivate
  * License:           GPL-3.0
  * License URI:       https://www.gnu.org/licenses/gpl-3.0.txt

@@ -2,6 +2,9 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import Review from "../components/Review";
+import loaderImg from "../img/loader.gif";
+import "./Shortcode.scss";
+import AddReview from "../components/AddReview";
 
 export default class Shortcode extends Component {
   state = {
@@ -39,18 +42,16 @@ export default class Shortcode extends Component {
       : (reviewsList = null);
 
     return (
-      <div>
+      <div className="shortcode">
         {reviewsList ? (
           <>
             <h3>{title}</h3>
             <hr />
             <div className="reviews-list">{reviewsList}</div>
+            <AddReview />
           </>
         ) : (
-          <img
-            style={{ display: "block", margin: "auto" }}
-            src="http://brothersart.pl/wp-content/themes/piper/assets/images/loading.GIF"
-          />
+          <img style={{ display: "block", margin: "auto" }} src={loaderImg} />
         )}
       </div>
     );

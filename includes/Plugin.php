@@ -82,6 +82,34 @@ class Plugin
 	{
 		flush_rewrite_rules();
 		add_option('RP_example_setting');
+		global $wpdb;
+
+		$table_name = $wpdb->prefix . 'reviews';
+
+		$charset_collate = $wpdb->get_charset_collate();
+
+		$sql = "CREATE TABLE $table_name (
+		id mediumint(9) NOT NULL AUTO_INCREMENT,
+		author varchar(55) DEFAULT '' NOT NULL,
+		content text NOT NULL,
+		site_url varchar(55) DEFAULT '' NOT NULL,
+		time datetime DEFAULT '0000-00-00 00:00:00' NOT NULL,
+		PRIMARY KEY  (id)
+		) $charset_collate;";
+
+		require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+		dbDelta($sql);
+
+		$wpdb->insert(
+			$table_name,
+			array(
+				'author' => 'Patryk',
+				'content' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam illum adipisci nobis ducimus nam explicabo mollitia optio voluptatem error.',
+				'site_url' => 'https://codex.wordpress.org',
+				'time' => current_time('mysql'),
+			)
+		);
+
 	}
 
 	/**
