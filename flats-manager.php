@@ -4,16 +4,16 @@
  * WP-Reactivate
  *
  *
- * @package   Reviews Plugin
+ * @package   Flats Manager [emoz]
  * @author    PB
  * @license   GPL-3.0
  * @link      https://patrykbejcer.pl
  * @copyright 2019 PB
  *
  * @wordpress-plugin
- * Plugin Name:       Reviews Plugin
+ * Plugin Name:       Flats Manager [emoz]
  * Plugin URI:        https://patrykbejcer.pl
- * Description:       Reviews plugin for wordpress.
+ * Description:       Flats Manager [emoz].
  * Version:           1.0.2
  * Author:            PB
  * Author URI:        https://patrykbejcer.pl
@@ -24,7 +24,7 @@
  */
 
 
-namespace PB\RP;
+namespace PB\FM;
 
 // If this file is called directly, abort.
 if (!defined('WPINC')) {
@@ -78,30 +78,18 @@ spl_autoload_register(function ($class) {
  */
 function init()
 {
-    $RP = Plugin::get_instance();
-    $RP_shortcode = Shortcode::get_instance();
-    $RP_cpt = CustomPostType::get_instance();
-    $RP_admin = Admin::get_instance();
-    $RP_rest = Endpoint\Example::get_instance();
-    $RP_rest_reviews = Endpoint\Reviews::get_instance(); // connect our new endpoint
+    $FM = Plugin::get_instance();
+    $FM_admin = Admin::get_instance();
+    $FM_rest_flats = Endpoint\Flats::get_instance();
+    // $FM_rest = Endpoint\Example::get_instance();
+    // $FM_rest_reviews = Endpoint\Reviews::get_instance(); // connect our new endpoint
 }
 
-add_action('plugins_loaded', 'PB\\RP\\init');
+add_action('plugins_loaded', 'PB\\FM\\init');
 
-
-/**
- * Register the widget
- *
- * @since 1.0.0
- */
-function widget_init()
-{
-    return register_widget(new Widget);
-}
-add_action('widgets_init', 'PB\\RP\\widget_init');
 
 /**
  * Register activation and deactivation hooks
  */
-register_activation_hook(__FILE__, array('PB\\RP\\Plugin', 'activate'));
-register_deactivation_hook(__FILE__, array('PB\\RP\\Plugin', 'deactivate'));
+register_activation_hook(__FILE__, array('PB\\FM\\Plugin', 'activate'));
+register_deactivation_hook(__FILE__, array('PB\\FM\\Plugin', 'deactivate'));

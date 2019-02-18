@@ -11,9 +11,9 @@
  * @copyright 2017 PB (Pty) Ltd
  */
 
-namespace PB\RP\Endpoint;
+namespace PB\FM\Endpoint;
 
-use PB\RP;
+use PB\FM;
 
 /**
  * @subpackage REST_Controller
@@ -37,7 +37,7 @@ class Example
      */
     private function __construct()
     {
-        $plugin = RP\Plugin::get_instance();
+        $plugin = FM\Plugin::get_instance();
         $this->plugin_slug = $plugin->get_plugin_slug();
     }
 

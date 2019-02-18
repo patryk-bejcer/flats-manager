@@ -11,7 +11,7 @@
  * @copyright 2017 patryk bejcer (Pty) Ltd
  */
 
-namespace PB\RP;
+namespace PB\FM;
 
 /**
  * @subpackage Plugin
@@ -28,14 +28,14 @@ class Plugin
 	 *
 	 * @var      string
 	 */
-	protected $plugin_slug = 'lumi-reviews';
+	protected $plugin_slug = 'flat-manager';
 
 	/**
 	 * Instance of this class.
 	 *
 	 * @since    1.0.0
 	 *
-	 * @var      object
+	 * @var object
 	 */
 	protected static $instance = null;
 

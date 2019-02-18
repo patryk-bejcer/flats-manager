@@ -11,14 +11,15 @@
  * @copyright 2017 PB (Pty) Ltd
  */
 
-namespace PB\RP\Endpoint;
+namespace PB\FM\Endpoint;
 
-use PB\RP;
+use PB\FM;
+use stdClass;
 
 /**
  * @subpackage REST_Controller
  */
-class Reviews
+class Flats
 {
     /**
      * Instance of this class.
@@ -37,7 +38,7 @@ class Reviews
      */
     private function __construct()
     {
-        $plugin = RP\Plugin::get_instance();
+        $plugin = FM\Plugin::get_instance();
         $this->plugin_slug = $plugin->get_plugin_slug();
     }
 
@@ -77,12 +78,22 @@ class Reviews
     {
         $version = '1';
         $namespace = $this->plugin_slug . '/v' . $version;
-        $endpoint = '/reviews/';
+        $endpoint = '/flats/';
 
         register_rest_route($namespace, $endpoint, array(
             array(
                 'methods' => \WP_REST_Server::READABLE,
-                'callback' => array($this, 'get_reviews'),
+                'callback' => array($this, 'get_flats'),
+                'permission_callback' => array($this, 'flats_permissions_check'),
+                'args' => array(),
+            ),
+        ));
+
+        register_rest_route($namespace, $endpoint, array(
+            array(
+                'methods' => \WP_REST_Server::EDITABLE,
+                'callback' => array($this, 'update_flat'),
+                'permission_callback' => array($this, 'flats_permissions_check'),
                 'args' => array(),
             ),
         ));
@@ -94,28 +105,28 @@ class Reviews
      * @param WP_REST_Request $request Full data about the request.
      * @return WP_Error|WP_REST_Request
      */
-    public function get_reviews($request)
+    public function get_flats($request)
     {
 
         $args = array(
-            'post_type' => 'review'
+            'post_type' => 'mieszkania',
+            'posts_per_page' => 100
         );
 
-        $reviews = get_posts($args);
+        $flats = get_posts($args);
 
-        // $reviewsArr = [];
+        foreach ($flats as $flat) {
 
-        // foreach ($reviews as $review) {
-        //     $reviewObj = new stdClass();
-        //     $reviewObj->title = $review->post_title;
-        //     $reviewObj->authorName = get_post_meta($review->ID, '_author_name', true);
-        //     $reviewObj->url = get_home_url() . '/reviews/' . $review->post_name;
-        //     array_push($reviewsArr, $reviewObj);
-        // }
+            $x = new stdClass();
 
+            $post_meta = get_post_meta($flat->ID, 'mieszkania_extend', true);
+
+            $flat->flat_meta_fields = $post_meta[0];
+
+        }
 
         // Don't return false if there is no option
-        if (!$reviews) {
+        if (!$flats) {
             return new \WP_REST_Response(array(
                 'success' => true,
                 'value' => null
@@ -125,7 +136,29 @@ class Reviews
         return new \WP_REST_Response(array(
             'url' => get_home_url(),
             'success' => true,
-            'value' => $reviews
+            'value' => $flats
+        ), 200);
+    }
+
+    /**
+     * Create OR Update Example
+     *
+     * @param WP_REST_Request $request Full data about the request.
+     * @return WP_Error|WP_REST_Request
+     */
+    public function update_flat($request)
+    {
+
+        $flat = $request->get_param('flat');
+        $flat_meta_fields = $flat['flat_meta_fields'];
+
+        foreach ($flat_meta_fields as $key => $value) {
+            update_post_meta($flat['ID'], $key = $key, $value = $value);
+        }
+
+        return new \WP_REST_Response(array(
+            'success' => true,
+            'value' => $request->get_param('flat')
         ), 200);
     }
 
@@ -136,7 +169,7 @@ class Reviews
      * @param WP_REST_Request $request Full data about the request.
      * @return WP_Error|bool
      */
-    public function review_permissions_check($request)
+    public function flats_permissions_check($request)
     {
         return current_user_can('manage_options');
     }

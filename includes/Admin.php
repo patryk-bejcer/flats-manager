@@ -11,7 +11,7 @@
  * @copyright 2017 PB (Pty) Ltd
  */
 
-namespace PB\RP;
+namespace PB\FM;
 
 /**
  * @subpackage Admin
@@ -79,6 +79,9 @@ class Admin
 		$this->version = $plugin->get_plugin_version();
 
 		$this->plugin_basename = plugin_basename(plugin_dir_path(realpath(dirname(__FILE__))) . $this->plugin_slug . '.php');
+
+
+
 	}
 
 
@@ -154,8 +157,8 @@ class Admin
 		 * Add a settings page for this plugin to the Settings menu.
 		 */
 		$this->plugin_screen_hook_suffix = add_options_page(
-			__('WP Reactivate', $this->plugin_slug),
-			__('WP Reactivate', $this->plugin_slug),
+			__('Flat Manager', $this->plugin_slug),
+			__('Flat Manager', $this->plugin_slug),
 			'manage_options',
 			$this->plugin_slug,
 			array($this, 'display_plugin_admin_page')

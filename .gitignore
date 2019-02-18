@@ -4,3 +4,5 @@ $ cat .gitignore
 
 # exclude built js
 /assets/js/*
+
+/app/components/Admin/___FlatManager2.jsx
