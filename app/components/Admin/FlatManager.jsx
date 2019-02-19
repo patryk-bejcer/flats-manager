@@ -2,17 +2,18 @@
 /* eslint-disable no-undef */
 import React, { Component } from "react";
 import fetchWP from "../../utils/fetchWP";
+import "./FlatManager.scss";
 import FlatList from "./FlatList";
 
 export default class FlatManager extends Component {
   constructor(props) {
     super(props);
 
+    this.order = false;
+
     this.state = {
       flats: [],
-      alert: false,
-      exampleSetting: "",
-      savedExampleSetting: ""
+      alert: false
     };
 
     this.fetchWP = new fetchWP({
@@ -45,7 +46,7 @@ export default class FlatManager extends Component {
     });
     setTimeout(() => {
       this.setState({ alert: false });
-    }, 2500);
+    }, 3500);
   };
 
   handleChange = (e, id) => {
@@ -56,8 +57,6 @@ export default class FlatManager extends Component {
       return flat;
     });
 
-    // console.log(flats);
-
     this.setState({
       flats
     });
@@ -65,10 +64,52 @@ export default class FlatManager extends Component {
 
   handleClickSaveButton = (e, id) => {
     e.preventDefault();
-    console.log(id);
     const flat = this.state.flats.filter(flat => flat.ID == id);
-    console.log(flat[0]);
     this.updateSingleFlat(flat[0]);
+  };
+
+  handleSort = column => {
+    console.log(column);
+
+    this.order = !this.order;
+
+    const flats = this.state.flats.sort((a, b) => {
+      let x = a.post_title;
+      let y = b.post_title;
+
+      if (column === "price") {
+        x = a.flat_meta_fields["cena-brutto"];
+        y = b.flat_meta_fields["cena-brutto"];
+      } else if (column === "status") {
+        x = a.flat_meta_fields["status"];
+        y = b.flat_meta_fields["status"];
+      } else if (column === "stockwerk") {
+        x = a.flat_meta_fields["kondygnacja"];
+        y = b.flat_meta_fields["kondygnacja"];
+      } else if (column === "area") {
+        x = a.flat_meta_fields["powierzchnia-uzytkowa"];
+        y = b.flat_meta_fields["powierzchnia-uzytkowa"];
+      } else if (column === "garden") {
+        x = a.flat_meta_fields["ogrodekstrych"];
+        y = b.flat_meta_fields["ogrodekstrych"];
+      } else if (column === "garden_area") {
+        x = a.flat_meta_fields["powierzchnia-ogrodkastrychu"];
+        y = b.flat_meta_fields["powierzchnia-ogrodkastrychu"];
+      }
+
+      if (!this.order) {
+        if (x < y) return 1;
+        if (x > y) return -1;
+      } else {
+        if (x < y) return -1;
+        if (x > y) return 1;
+      }
+      return 0;
+    });
+
+    this.setState({
+      flats
+    });
   };
 
   componentDidMount() {
@@ -89,7 +130,9 @@ export default class FlatManager extends Component {
             Zapisano pomyślnie
           </div>
         ) : null}
+        <button onClick={this.handleSort.bind(this, "number")}>SORT</button>
         <FlatList
+          filterColumn={this.handleSort}
           save={this.handleClickSaveButton}
           changeInput={this.handleChange}
           flats={flats}

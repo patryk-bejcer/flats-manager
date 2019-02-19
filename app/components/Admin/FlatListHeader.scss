@@ -1,0 +1,15 @@
+.columns-header {
+    background: #23282D;
+
+    a {
+        color: #FFF;
+    }
+
+    .sorting-indicator {
+        &:before {
+            color: #FFF;
+            top: 6px;
+            left: 0px;
+        }
+    }
+}

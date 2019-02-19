@@ -1,45 +1,26 @@
 /* eslint-disable react/prop-types */
 import React, { Component } from "react";
 import FlatListHeader from "./FlatListHeader";
+import "./FlatList.scss";
 
 export default class FlatList extends Component {
   render() {
     const { changeInput, save } = this.props;
     const flats = this.props.flats.map(flat => (
-      <tr data-id={flat.ID} key={flat.ID}>
+      <tr key={flat.ID}>
         <td>
-          <h3>
-            <b> {flat.post_title}</b>
-          </h3>
-        </td>
-        <td>
-          <select
-            name="kondygnacja"
-            value={flat.flat_meta_fields["kondygnacja"]}
-            onChange={e => changeInput(e, flat.ID)}
-          >
-            <option value="parter">parter</option>
-            <option value="I piętro">I piętro</option>
-            <option value="II piętro">II piętro</option>
-          </select>
+          <b>{flat.post_title}</b>
         </td>
         <td>
           <input
-            name="powierzchnia-uzytkowa"
-            type="text"
-            value={flat.flat_meta_fields["powierzchnia-uzytkowa"]}
-            onChange={e => changeInput(e, flat.ID)}
-          />
-        </td>
-
-        <td>
-          <input
+            style={{ width: "62px" }}
             name="cena-brutto"
             type="text"
             value={flat.flat_meta_fields["cena-brutto"]}
             onChange={e => changeInput(e, flat.ID)}
           />
         </td>
+
         <td>
           <select
             name="status"
@@ -51,6 +32,29 @@ export default class FlatList extends Component {
             <option value="wolny">wolny</option>
           </select>
         </td>
+
+        <td>
+          <select
+            name="kondygnacja"
+            value={flat.flat_meta_fields["kondygnacja"]}
+            onChange={e => changeInput(e, flat.ID)}
+          >
+            <option value="parter">parter</option>
+            <option value="I piętro">I piętro</option>
+            <option value="II piętro">II piętro</option>
+          </select>
+        </td>
+
+        <td>
+          <input
+            style={{ width: "48px" }}
+            name="powierzchnia-uzytkowa"
+            type="text"
+            value={flat.flat_meta_fields["powierzchnia-uzytkowa"]}
+            onChange={e => changeInput(e, flat.ID)}
+          />
+        </td>
+
         <td>
           <select
             name="ogrodekstrych"
@@ -62,9 +66,25 @@ export default class FlatList extends Component {
             <option value="-">-</option>
           </select>
         </td>
+        <td>
+          <input
+            style={{ width: "48px" }}
+            name="powierzchnia-ogrodkastrychu"
+            type="text"
+            value={flat.flat_meta_fields["powierzchnia-ogrodkastrychu"]}
+            onChange={e => changeInput(e, flat.ID)}
+          />
+        </td>
 
         <td>
           <button
+            className="button button-danger save alignright"
+            onClick={e => save(e, flat.ID)}
+          >
+            Usuń
+          </button>
+          <button
+            style={{ marginRight: 5, marginTop: 5 }}
             className="button button-primary save alignright"
             onClick={e => save(e, flat.ID)}
           >
@@ -75,8 +95,8 @@ export default class FlatList extends Component {
     ));
     return (
       <>
-        <table className="wp-list-table widefat fixed striped posts">
-          <FlatListHeader />
+        <table className="wp-list-table widefat fixed striped flats-list-table">
+          <FlatListHeader filterColumn={this.props.filterColumn} />
           <tbody id="the-list">{flats}</tbody>
         </table>
       </>
