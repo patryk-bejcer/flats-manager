@@ -130,7 +130,7 @@ export default class FlatManager extends Component {
             Zapisano pomyślnie
           </div>
         ) : null}
-        <button onClick={this.handleSort.bind(this, "number")}>SORT</button>
+        {/* <button onClick={this.handleSort.bind(this, "number")}>SORT</button> */}
         <FlatList
           filterColumn={this.handleSort}
           save={this.handleClickSaveButton}

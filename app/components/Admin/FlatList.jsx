@@ -84,7 +84,7 @@ export default class FlatList extends Component {
             Usuń
           </button>
           <button
-            style={{ marginRight: 5, marginTop: 5 }}
+            style={{ marginRight: 5 }}
             className="button button-primary save alignright"
             onClick={e => save(e, flat.ID)}
           >
