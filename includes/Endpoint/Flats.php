@@ -97,10 +97,19 @@ class Flats
                 'args' => array(),
             ),
         ));
+
+        register_rest_route($namespace, $endpoint, array(
+            array(
+                'methods' => \WP_REST_Server::DELETABLE,
+                'callback' => array($this, 'delete_flat'),
+                // 'permission_callback' => array($this, 'flats_permissions_check'),
+                'args' => array(),
+            ),
+        ));
     }
 
     /**
-     * Get review
+     * Get Method
      *
      * @param WP_REST_Request $request Full data about the request.
      * @return WP_Error|WP_REST_Request
@@ -141,7 +150,7 @@ class Flats
     }
 
     /**
-     * Create OR Update Example
+     * Update Method
      *
      * @param WP_REST_Request $request Full data about the request.
      * @return WP_Error|WP_REST_Request
@@ -159,6 +168,30 @@ class Flats
         return new \WP_REST_Response(array(
             'success' => true,
             'value' => $request->get_param('flat')
+        ), 200);
+    }
+
+
+    /**
+     * Delete Method
+     *
+     * @param WP_REST_Request $request Full data about the request.
+     * @return WP_Error|WP_REST_Request
+     */
+    public function delete_flat($request)
+    {
+        $id = $request->get_param('id');
+
+        $post = array(
+            'ID' => $id,
+            'post_status' => 'private',
+        );
+
+        // Update the post into the database
+        $update = wp_update_post($post);
+
+        return new \WP_REST_Response(array(
+            'success' => $update,
         ), 200);
     }
 

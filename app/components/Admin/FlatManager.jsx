@@ -4,6 +4,8 @@ import React, { Component } from "react";
 import fetchWP from "../../utils/fetchWP";
 import "./FlatManager.scss";
 import FlatList from "./FlatList";
+import SuccessMessage from "./SuccessMessage";
+import { sortFlatList } from "./helpers";
 
 export default class FlatManager extends Component {
   constructor(props) {
@@ -49,6 +51,19 @@ export default class FlatManager extends Component {
     }, 3500);
   };
 
+  unpublishFlat = id => {
+    this.fetchWP
+      .delete("flats", { id })
+      .then(
+        json => this.processOkResponse(json, "unpublish"),
+        err => console.log("error", err)
+      );
+    const flats = this.state.flats.filter(flat => flat.ID !== id);
+    this.setState({
+      flats
+    });
+  };
+
   handleChange = (e, id) => {
     const flats = this.state.flats.map(flat => {
       if (flat.ID == id) {
@@ -56,60 +71,30 @@ export default class FlatManager extends Component {
       }
       return flat;
     });
-
     this.setState({
       flats
     });
+  };
+
+  handleClickSortButton = column => {
+    this.order = !this.order;
+    const flats = this.state.flats.sort((a, b) =>
+      sortFlatList(a, b, column, this.order)
+    );
+    this.setState({
+      flats
+    });
+  };
+
+  handleClickRemoveButton = id => {
+    console.log("remove");
+    this.unpublishFlat(id);
   };
 
   handleClickSaveButton = (e, id) => {
     e.preventDefault();
     const flat = this.state.flats.filter(flat => flat.ID == id);
     this.updateSingleFlat(flat[0]);
-  };
-
-  handleSort = column => {
-    console.log(column);
-
-    this.order = !this.order;
-
-    const flats = this.state.flats.sort((a, b) => {
-      let x = a.post_title;
-      let y = b.post_title;
-
-      if (column === "price") {
-        x = a.flat_meta_fields["cena-brutto"];
-        y = b.flat_meta_fields["cena-brutto"];
-      } else if (column === "status") {
-        x = a.flat_meta_fields["status"];
-        y = b.flat_meta_fields["status"];
-      } else if (column === "stockwerk") {
-        x = a.flat_meta_fields["kondygnacja"];
-        y = b.flat_meta_fields["kondygnacja"];
-      } else if (column === "area") {
-        x = a.flat_meta_fields["powierzchnia-uzytkowa"];
-        y = b.flat_meta_fields["powierzchnia-uzytkowa"];
-      } else if (column === "garden") {
-        x = a.flat_meta_fields["ogrodekstrych"];
-        y = b.flat_meta_fields["ogrodekstrych"];
-      } else if (column === "garden_area") {
-        x = a.flat_meta_fields["powierzchnia-ogrodkastrychu"];
-        y = b.flat_meta_fields["powierzchnia-ogrodkastrychu"];
-      }
-
-      if (!this.order) {
-        if (x < y) return 1;
-        if (x > y) return -1;
-      } else {
-        if (x < y) return -1;
-        if (x > y) return 1;
-      }
-      return 0;
-    });
-
-    this.setState({
-      flats
-    });
   };
 
   componentDidMount() {
@@ -125,14 +110,10 @@ export default class FlatManager extends Component {
     return (
       <div className="wrap">
         <h1>Flat Manager</h1>
-        {this.state.alert ? (
-          <div className="notice notice-success is-dismissible">
-            Zapisano pomyślnie
-          </div>
-        ) : null}
-        {/* <button onClick={this.handleSort.bind(this, "number")}>SORT</button> */}
+        <SuccessMessage alert={this.state.alert} />
         <FlatList
-          filterColumn={this.handleSort}
+          sortColumn={this.handleClickSortButton}
+          remove={this.handleClickRemoveButton}
           save={this.handleClickSaveButton}
           changeInput={this.handleChange}
           flats={flats}

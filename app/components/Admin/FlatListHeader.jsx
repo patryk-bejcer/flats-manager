@@ -27,10 +27,12 @@ export default class FlatListHeader extends Component {
           id="title"
           className="manage-column column-title column-primary sortable desc"
         >
-          <a onClick={() => this.props.filterColumn(field.id)}>
-            <span>{field.name}</span>
-            <span className="sorting-indicator" />
-          </a>
+          {field.id !== "action" ? (
+            <a onClick={() => this.props.sortColumn(field.id)}>
+              <span>{field.name}</span>
+              <span className="sorting-indicator" />
+            </a>
+          ) : null}
         </th>
       );
     });

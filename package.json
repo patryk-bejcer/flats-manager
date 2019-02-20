@@ -1,17 +1,13 @@
 {
-  "name": "wp-reactivate",
+  "name": "flat-manager",
   "version": "1.0.2",
-  "description": "React boilerplate for WordPress plugins",
+  "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack --progress --colors --watch --mode=development",
     "prod": "webpack --progress --colors -p --config webpack.config.js --mode=production",
     "watch": "npm-watch"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/goPB/wp-reactivate.git"
   },
   "keywords": [
     "wordpress",
@@ -21,10 +17,6 @@
   ],
   "author": "PB",
   "license": "GPL-3.0",
-  "bugs": {
-    "url": "https://github.com/goPB/wp-reactivate/issues"
-  },
-  "homepage": "https://github.com/goPB/wp-reactivate#readme",
   "dependencies": {
     "@babel/polyfill": "^7.0.0",
     "font-awesome": "^4.7.0",

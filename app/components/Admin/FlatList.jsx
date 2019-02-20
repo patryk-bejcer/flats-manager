@@ -5,8 +5,9 @@ import "./FlatList.scss";
 
 export default class FlatList extends Component {
   render() {
-    const { changeInput, save } = this.props;
-    const flats = this.props.flats.map(flat => (
+    const { changeInput, save, remove } = this.props;
+    let flats = this.props.flats.filter(flat => flat.post_status === "publish");
+    flats = flats.map(flat => (
       <tr key={flat.ID}>
         <td>
           <b>{flat.post_title}</b>
@@ -79,7 +80,7 @@ export default class FlatList extends Component {
         <td>
           <button
             className="button button-danger save alignright"
-            onClick={e => save(e, flat.ID)}
+            onClick={e => remove(flat.ID)}
           >
             Usuń
           </button>
@@ -96,7 +97,7 @@ export default class FlatList extends Component {
     return (
       <>
         <table className="wp-list-table widefat fixed striped flats-list-table">
-          <FlatListHeader filterColumn={this.props.filterColumn} />
+          <FlatListHeader sortColumn={this.props.sortColumn} />
           <tbody id="the-list">{flats}</tbody>
         </table>
       </>
