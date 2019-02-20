@@ -2,7 +2,7 @@
 import React from "react";
 
 const SuccessMessage = props => {
-  const { alert } = props;
+  const { alert, type } = props;
   return (
     <div>
       {alert ? (

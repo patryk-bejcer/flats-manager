@@ -5,7 +5,7 @@ import fetchWP from "../../utils/fetchWP";
 import "./FlatManager.scss";
 import FlatList from "./FlatList";
 import SuccessMessage from "./SuccessMessage";
-import { sortFlatList } from "./helpers";
+import { sortFlatList } from "./_helpers";
 
 export default class FlatManager extends Component {
   constructor(props) {
@@ -15,7 +15,8 @@ export default class FlatManager extends Component {
 
     this.state = {
       flats: [],
-      alert: false
+      alert: false,
+      type: ""
     };
 
     this.fetchWP = new fetchWP({
@@ -44,7 +45,8 @@ export default class FlatManager extends Component {
         err => console.log("error", err)
       );
     this.setState({
-      alert: true
+      alert: true,
+      type: "success"
     });
     setTimeout(() => {
       this.setState({ alert: false });
@@ -53,9 +55,9 @@ export default class FlatManager extends Component {
 
   unpublishFlat = id => {
     this.fetchWP
-      .delete("flats", { id })
+      .delete("flats", { id: id })
       .then(
-        json => this.processOkResponse(json, "unpublish"),
+        json => this.processOkResponse(json, "deleted"),
         err => console.log("error", err)
       );
     const flats = this.state.flats.filter(flat => flat.ID !== id);
@@ -110,7 +112,7 @@ export default class FlatManager extends Component {
     return (
       <div className="wrap">
         <h1>Flat Manager</h1>
-        <SuccessMessage alert={this.state.alert} />
+        <SuccessMessage type={this.state.type} alert={this.state.alert} />
         <FlatList
           sortColumn={this.handleClickSortButton}
           remove={this.handleClickRemoveButton}

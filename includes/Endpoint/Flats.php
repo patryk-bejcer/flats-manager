@@ -184,14 +184,14 @@ class Flats
 
         $post = array(
             'ID' => $id,
-            'post_status' => 'private',
+            'post_status' => 'draft',
         );
 
         // Update the post into the database
-        $update = wp_update_post($post);
+        wp_update_post($post);
 
         return new \WP_REST_Response(array(
-            'success' => $update,
+            'success' => true
         ), 200);
     }
 

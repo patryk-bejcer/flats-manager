@@ -20,21 +20,16 @@ export function sortFlatList(a, b, column, order) {
       y = b.flat_meta_fields["kondygnacja"].toLowerCase();
       break;
     case "area":
-      x = a.flat_meta_fields["powierzchnia-uzytkowa"];
-      y = b.flat_meta_fields["powierzchnia-uzytkowa"];
+      x = parseInt(a.flat_meta_fields["powierzchnia-uzytkowa"]);
+      y = parseInt(b.flat_meta_fields["powierzchnia-uzytkowa"]);
       break;
     case "garden":
       x = a.flat_meta_fields["ogrodekstrych"].toLowerCase();
       y = b.flat_meta_fields["ogrodekstrych"].toLowerCase();
       break;
     case "garden_area":
-      x = a.flat_meta_fields["powierzchnia-ogrodkastrychu"];
-      y = b.flat_meta_fields["powierzchnia-ogrodkastrychu"];
-      break;
-
-    default:
-      x = a.post_title;
-      y = b.post_title;
+      x = parseInt(a.flat_meta_fields["powierzchnia-ogrodkastrychu"]);
+      y = parseInt(b.flat_meta_fields["powierzchnia-ogrodkastrychu"]);
       break;
   }
 
