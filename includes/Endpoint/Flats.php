@@ -102,7 +102,7 @@ class Flats
             array(
                 'methods' => \WP_REST_Server::DELETABLE,
                 'callback' => array($this, 'delete_flat'),
-                // 'permission_callback' => array($this, 'flats_permissions_check'),
+                'permission_callback' => array($this, 'flats_permissions_check'),
                 'args' => array(),
             ),
         ));
