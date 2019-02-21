@@ -62,7 +62,7 @@ class Flats
     public static function get_instance()
     {
 
-		// If the single instance hasn't been set, set it now.
+        // If the single instance hasn't been set, set it now.
         if (null == self::$instance) {
             self::$instance = new self;
             self::$instance->do_hooks();
@@ -89,7 +89,7 @@ class Flats
             ),
         ));
 
-        register_rest_route($namespace, $endpoint, array(
+        register_rest_route($namespace, 'update', array(
             array(
                 'methods' => \WP_REST_Server::EDITABLE,
                 'callback' => array($this, 'update_flat'),
@@ -98,10 +98,10 @@ class Flats
             ),
         ));
 
-        register_rest_route($namespace, $endpoint, array(
+        register_rest_route($namespace, 'unpublish', array(
             array(
-                'methods' => \WP_REST_Server::DELETABLE,
-                'callback' => array($this, 'delete_flat'),
+                'methods' => \WP_REST_Server::EDITABLE,
+                'callback' => array($this, 'unpublish_flat'),
                 'permission_callback' => array($this, 'flats_permissions_check'),
                 'args' => array(),
             ),
@@ -131,7 +131,6 @@ class Flats
             $post_meta = get_post_meta($flat->ID, 'mieszkania_extend', true);
 
             $flat->flat_meta_fields = $post_meta[0];
-
         }
 
         // Don't return false if there is no option
@@ -178,7 +177,7 @@ class Flats
      * @param WP_REST_Request $request Full data about the request.
      * @return WP_Error|WP_REST_Request
      */
-    public function delete_flat($request)
+    public function unpublish_flat($request)
     {
         $id = $request->get_param('id');
 

@@ -47,7 +47,7 @@ export default class FlatManager extends Component {
 
   updateSingleFlat = flat => {
     this.fetchWP
-      .post("flats", { flat })
+      .post("update", { flat })
       .then(
         json => this.processOkResponse(json, "saved"),
         err => console.log("error", err)
@@ -61,7 +61,7 @@ export default class FlatManager extends Component {
 
   unpublishFlat = id => {
     this.fetchWP
-      .delete("flats", { id: id })
+      .post("unpublish", { id: id })
       .then(
         json => this.processOkResponse(json, "deleted"),
         err => console.log("error", err)
