@@ -3,6 +3,12 @@
 
     a {
         color: #FFF;
+
+        &:hover {
+            span {
+                text-decoration: underline;
+            }
+        }
     }
 
     .sorting-indicator {

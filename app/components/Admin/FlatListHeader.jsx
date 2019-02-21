@@ -11,7 +11,7 @@ export default class FlatListHeader extends Component {
       { id: "price", name: "Cena brutto" },
       { id: "status", name: "Status mieszkania" },
       { id: "stockwerk", name: "Kondygnacja" },
-      { id: "area", name: "Powierzchnia użytkowa" },
+      { id: "area", name: "Powierzchnia użyt." },
       { id: "garden", name: "Ogródek/Strych" },
       { id: "garden_area", name: "Pow. (ogródek / strych)" },
       { id: "action", name: "Akcja" }
@@ -28,9 +28,14 @@ export default class FlatListHeader extends Component {
           className="manage-column column-title column-primary sortable desc"
         >
           {field.id !== "action" ? (
-            <a onClick={() => this.props.sortColumn(field.id)}>
-              <span>{field.name}</span>
-              <span className="sorting-indicator" />
+            <a
+              onClick={() => this.props.sortColumn(field.id)}
+              title={`Kliknij aby sortować po "${field.name}"`}
+            >
+              <span>
+                {field.name} <i className="fa fa-sort" aria-hidden="true" />
+              </span>
+              {/* <span className="sorting-indicator" /> */}
             </a>
           ) : null}
         </th>

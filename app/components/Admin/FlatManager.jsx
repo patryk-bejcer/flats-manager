@@ -6,6 +6,8 @@ import "./FlatManager.scss";
 import FlatList from "./FlatList";
 import SuccessMessage from "./SuccessMessage";
 import { sortFlatList } from "./_helpers";
+import { confirmAlert } from "react-confirm-alert"; // Import
+import "react-confirm-alert/src/react-confirm-alert.css"; // Import css
 
 export default class FlatManager extends Component {
   constructor(props) {
@@ -37,6 +39,12 @@ export default class FlatManager extends Component {
     }
   };
 
+  removeAlert = () => {
+    setTimeout(() => {
+      this.setState({ alert: false, type: "" });
+    }, 5000);
+  };
+
   updateSingleFlat = flat => {
     this.fetchWP
       .post("flats", { flat })
@@ -46,11 +54,9 @@ export default class FlatManager extends Component {
       );
     this.setState({
       alert: true,
-      type: "success"
+      type: "update"
     });
-    setTimeout(() => {
-      this.setState({ alert: false });
-    }, 3500);
+    this.removeAlert();
   };
 
   unpublishFlat = id => {
@@ -62,8 +68,11 @@ export default class FlatManager extends Component {
       );
     const flats = this.state.flats.filter(flat => flat.ID !== id);
     this.setState({
-      flats
+      flats,
+      alert: true,
+      type: "remove"
     });
+    this.removeAlert();
   };
 
   handleChange = (e, id) => {
@@ -89,8 +98,20 @@ export default class FlatManager extends Component {
   };
 
   handleClickRemoveButton = id => {
-    console.log("remove");
-    this.unpublishFlat(id);
+    confirmAlert({
+      title: "Potwierdzenie usunięcia",
+      message: "Jesteś pewien że chcesz usunąć tą nieruchomość?",
+      buttons: [
+        {
+          label: "Tak",
+          onClick: () => this.unpublishFlat(id)
+        },
+        {
+          label: "Nie",
+          onClick: () => {}
+        }
+      ]
+    });
   };
 
   handleClickSaveButton = (e, id) => {

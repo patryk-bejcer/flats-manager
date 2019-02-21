@@ -14,7 +14,7 @@ export default class FlatList extends Component {
         </td>
         <td>
           <input
-            style={{ width: "62px" }}
+            style={{ width: "66px" }}
             name="cena-brutto"
             type="text"
             value={flat.flat_meta_fields["cena-brutto"]}
@@ -48,7 +48,7 @@ export default class FlatList extends Component {
 
         <td>
           <input
-            style={{ width: "48px" }}
+            style={{ width: "52px" }}
             name="powierzchnia-uzytkowa"
             type="text"
             value={flat.flat_meta_fields["powierzchnia-uzytkowa"]}

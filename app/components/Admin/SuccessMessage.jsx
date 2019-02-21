@@ -7,7 +7,7 @@ const SuccessMessage = props => {
     <div>
       {alert ? (
         <div className="notice notice-success is-dismissible">
-          Zapisano pomyślnie
+          {type === "update" ? "Zapisano pomyślnie" : "Usunięto pomyślnie"}
         </div>
       ) : null}
     </div>
