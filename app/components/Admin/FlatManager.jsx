@@ -8,6 +8,7 @@ import SuccessMessage from "./SuccessMessage";
 import { sortFlatList } from "./_helpers";
 import { confirmAlert } from "react-confirm-alert"; // Import
 import "react-confirm-alert/src/react-confirm-alert.css"; // Import css
+import AddFlat from "./AddFlat";
 
 export default class FlatManager extends Component {
   constructor(props) {
@@ -18,7 +19,8 @@ export default class FlatManager extends Component {
     this.state = {
       flats: [],
       alert: false,
-      type: ""
+      type: "",
+      createStatus: false
     };
 
     this.fetchWP = new fetchWP({
@@ -120,6 +122,16 @@ export default class FlatManager extends Component {
     this.updateSingleFlat(flat[0]);
   };
 
+  handleClickAddButton = () => {
+    console.log("add");
+    this.setState({ createStatus: true });
+  };
+
+  handleClickExitFromCreate = () => {
+    console.log("add");
+    this.setState({ createStatus: false });
+  };
+
   componentDidMount() {
     this.fetchWP.get("flats").then(json => {
       const flats = json.value.sort((a, b) =>
@@ -135,8 +147,13 @@ export default class FlatManager extends Component {
     const { flats } = this.state;
     return (
       <div className="wrap">
-        <h1>Flat Manager</h1>
+        <h1>Mass Management of Apartments Panel</h1>
+        <button onClick={this.handleClickAddButton}>Add new flat</button>
         <SuccessMessage type={this.state.type} alert={this.state.alert} />
+        {this.state.createStatus ? <AddFlat /> : null}
+        {this.state.createStatus ? (
+          <button onClick={this.handleClickExitFromCreate}>X</button>
+        ) : null}
         <FlatList
           sortColumn={this.handleClickSortButton}
           remove={this.handleClickRemoveButton}
