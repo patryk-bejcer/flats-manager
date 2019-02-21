@@ -1,5 +1,12 @@
 .flats-list-table {
-    tr {}
+    tr {
+
+        input,
+        select,
+        .button {
+            font-size: 11px;
+        }
+    }
 
     td {
         text-align: center;

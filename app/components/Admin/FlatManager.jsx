@@ -13,7 +13,7 @@ export default class FlatManager extends Component {
   constructor(props) {
     super(props);
 
-    this.order = false;
+    this.order = true;
 
     this.state = {
       flats: [],
@@ -122,8 +122,11 @@ export default class FlatManager extends Component {
 
   componentDidMount() {
     this.fetchWP.get("flats").then(json => {
+      const flats = json.value.sort((a, b) =>
+        sortFlatList(a, b, "number", true)
+      );
       this.setState({
-        flats: json.value
+        flats
       });
     });
   }

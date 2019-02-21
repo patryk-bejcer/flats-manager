@@ -15,6 +15,15 @@ export default class FlatList extends Component {
         <td>
           <input
             style={{ width: "66px" }}
+            name="nr-mieszkania"
+            type="text"
+            value={flat.flat_meta_fields["nr-mieszkania"]}
+            onChange={e => changeInput(e, flat.ID)}
+          />
+        </td>
+        <td>
+          <input
+            style={{ width: "66px" }}
             name="cena-brutto"
             type="text"
             value={flat.flat_meta_fields["cena-brutto"]}
@@ -53,7 +62,8 @@ export default class FlatList extends Component {
             type="text"
             value={flat.flat_meta_fields["powierzchnia-uzytkowa"]}
             onChange={e => changeInput(e, flat.ID)}
-          />
+          />{" "}
+          m²
         </td>
 
         <td>
@@ -74,7 +84,8 @@ export default class FlatList extends Component {
             type="text"
             value={flat.flat_meta_fields["powierzchnia-ogrodkastrychu"]}
             onChange={e => changeInput(e, flat.ID)}
-          />
+          />{" "}
+          m²
         </td>
 
         <td>
