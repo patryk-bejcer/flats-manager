@@ -89,6 +89,15 @@ class Flats
             ),
         ));
 
+        register_rest_route($namespace, 'create', array(
+            array(
+                'methods' => \WP_REST_Server::EDITABLE,
+                'callback' => array($this, 'create_flat'),
+                // 'permission_callback' => array($this, 'flats_permissions_check'),
+                'args' => array(),
+            ),
+        ));
+
         register_rest_route($namespace, 'update', array(
             array(
                 'methods' => \WP_REST_Server::EDITABLE,
@@ -106,6 +115,45 @@ class Flats
                 'args' => array(),
             ),
         ));
+    }
+
+    /**
+     * Create Method
+     *
+     * @param WP_REST_Request $request Full data about the request.
+     * @return WP_Error|WP_REST_Request
+     */
+    public function create_flat($request)
+    {
+        $flat = $request->get_param('flat');
+        // Create post object
+        $newFlat = array(
+            'post_title'    => wp_strip_all_tags($flat['name']),
+            'post_content'  => "",
+            'post_status'   => 'publish',
+            'post_author'   => 1,
+            'post_type' => 'mieszkania',
+        );
+        // Insert the post into the database
+        $cratedFlat = wp_insert_post($newFlat);
+        add_post_meta($cratedFlat, 'nr-mieszkania', $flat['number'], true);
+        add_post_meta($cratedFlat, 'cena-brutto', $flat['price'], true);
+        add_post_meta($cratedFlat, 'status', $flat['status'], true);
+        add_post_meta($cratedFlat, 'kondygnacja', $flat['storey'], true);
+        add_post_meta($cratedFlat, 'powierzchnia-uzytkowa', $flat['area'], true);
+        add_post_meta($cratedFlat, 'ogrodekstrych', $flat['addition'], true);
+        add_post_meta($cratedFlat, 'powierzchnia-ogrodkastrychu', $flat['additionArea'], true);
+
+        if ($cratedFlat) {
+            return new \WP_REST_Response(array(
+                'success' => true,
+                'value' => $cratedFlat
+            ), 200);
+        } else {
+            return new \WP_REST_Response(array(
+                'success' => false,
+            ), 500);
+        }
     }
 
     /**

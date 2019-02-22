@@ -1,0 +1,32 @@
+.add-flat {
+
+    td {
+        &:first {
+            padding-left: 0;
+        }
+    }
+
+    input,
+    select {
+        height: auto;
+        font-size: 11px;
+    }
+
+    button {
+        font-size: 12px;
+    }
+
+
+    h3 {
+        margin-bottom: 5px;
+    }
+}
+
+.add-flat .add-flat-btn {
+    margin-top: .5em;
+    margin-bottom: .5em;
+}
+
+.add-flat .close-flat-btn {
+    margin-top: -.85em;
+}

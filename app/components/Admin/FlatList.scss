@@ -1,5 +1,16 @@
 .flats-list-table {
-    tr {}
+
+    margin-top: 1em;
+
+    tr {
+
+        input,
+        select,
+        .button {
+            font-size: 11px;
+            height: auto;
+        }
+    }
 
     td {
         text-align: center;
@@ -13,5 +24,17 @@
                 display: contents;
             }
         }
+    }
+}
+
+@media screen and (max-width: 782px) {
+
+    #wpbody select,
+    input,
+    select {
+        height: auto;
+        font-size: 11px;
+        padding: 3px 7px;
+        width: 100px !important;
     }
 }
