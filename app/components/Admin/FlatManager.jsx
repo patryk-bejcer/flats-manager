@@ -44,7 +44,7 @@ export default class FlatManager extends Component {
   removeAlert = () => {
     setTimeout(() => {
       this.setState({ alert: false, type: "" });
-    }, 5000);
+    }, 6000);
   };
 
   updateSingleFlat = flat => {
@@ -122,17 +122,30 @@ export default class FlatManager extends Component {
     this.updateSingleFlat(flat[0]);
   };
 
-  handleClickAddButton = () => {
-    console.log("add");
-    this.setState({ createStatus: true });
+  handleClickAddOrExitButton = () => {
+    this.setState({ createStatus: !this.state.createStatus });
   };
 
-  handleClickExitFromCreate = () => {
-    console.log("add");
-    this.setState({ createStatus: false });
+  handleSubmitAddNewFlatForm = flat => {
+    this.fetchWP
+      .post("create", { flat })
+      .then(
+        json => {
+          this.loadFlats();
+          this.processOkResponse(json, "saved");
+        },
+        err => console.log("error", err)
+      )
+      .then(() => {
+        this.setState({
+          alert: true,
+          type: "create"
+        });
+      });
+    this.removeAlert();
   };
 
-  componentDidMount() {
+  loadFlats() {
     this.fetchWP.get("flats").then(json => {
       const flats = json.value.sort((a, b) =>
         sortFlatList(a, b, "number", true)
@@ -143,17 +156,24 @@ export default class FlatManager extends Component {
     });
   }
 
+  componentDidMount() {
+    this.loadFlats();
+  }
+
   render() {
     const { flats } = this.state;
     return (
       <div className="wrap">
         <h1>Mass Management of Apartments Panel</h1>
-        <button onClick={this.handleClickAddButton}>Add new flat</button>
+
         <SuccessMessage type={this.state.type} alert={this.state.alert} />
-        {this.state.createStatus ? <AddFlat /> : null}
-        {this.state.createStatus ? (
-          <button onClick={this.handleClickExitFromCreate}>X</button>
-        ) : null}
+
+        <AddFlat
+          renderForm={this.handleClickAddOrExitButton}
+          createStatus={this.state.createStatus}
+          add={this.handleSubmitAddNewFlatForm}
+        />
+
         <FlatList
           sortColumn={this.handleClickSortButton}
           remove={this.handleClickRemoveButton}

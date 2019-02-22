@@ -107,7 +107,7 @@ export default class FlatList extends Component {
     ));
     return (
       <>
-        <table className="wp-list-table widefat fixed striped flats-list-table">
+        <table className="wp-list-table widefat striped flats-list-table">
           <FlatListHeader sortColumn={this.props.sortColumn} />
           <tbody id="the-list">{flats}</tbody>
         </table>
