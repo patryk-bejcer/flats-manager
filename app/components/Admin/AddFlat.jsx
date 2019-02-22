@@ -176,12 +176,14 @@ export default class AddFlat extends Component {
                       />
                     </td>
 
-                    <td>
+                    <td style={{ paddingTop: 0 }}>
                       <button
-                        style={{ marginRight: 5 }}
+                        style={{
+                          marginRight: 5
+                        }}
                         className="button button-primary save alignright"
                       >
-                        Dodaj +
+                        Zapisz mieszkanie +
                       </button>
                     </td>
                   </tr>

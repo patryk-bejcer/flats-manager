@@ -79,7 +79,11 @@ class Admin
         $this->version = $plugin->get_plugin_version();
 
         $this->plugin_basename = plugin_basename(plugin_dir_path(realpath(dirname(__FILE__))) . $this->plugin_slug . '.php');
+        add_action('admin_menu', array($this, 'register_plugin_menu_page'));
     }
+
+
+
 
 
     /**
@@ -175,6 +179,20 @@ class Admin
 
 }
 
+function register_plugin_menu_page()
+{
+    add_menu_page(
+        __('Edycja Mieszkań', 'textdomain'),
+        'Edycja Mieszkań',
+        'manage_options',
+        $this->plugin_slug,
+        '',
+        'dashicons-building',
+        25
+    );
+}
+
+
 /**
  * Add settings action link to the plugins page.
  *
@@ -182,6 +200,7 @@ class Admin
  */
 public function add_action_links($links)
 {
+
     return array_merge(
         array(
             'settings' => '<a href="' . admin_url('options-general.php?page=' . $this->plugin_slug) . '">' . __('Settings', $this->plugin_slug) . '</a>',
