@@ -231,7 +231,7 @@ class Flats
 
         $post = array(
             'ID' => $id,
-            'post_status' => 'draft',
+            'post_status' => 'trash',
         );
 
         // Update the post into the database
