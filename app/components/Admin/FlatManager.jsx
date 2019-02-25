@@ -89,6 +89,19 @@ export default class FlatManager extends Component {
     });
   };
 
+  handleChangePostStatus = (e, id) => {
+    console.log(e.target.value);
+    const flats = this.state.flats.map(flat => {
+      if (flat.ID == id) {
+        flat.post_status = e.target.value;
+      }
+      return flat;
+    });
+    this.setState({
+      flats
+    });
+  };
+
   handleClickSortButton = column => {
     this.order = !this.order;
     const flats = this.state.flats.sort((a, b) =>
@@ -169,6 +182,7 @@ export default class FlatManager extends Component {
         <SuccessMessage type={this.state.type} alert={this.state.alert} />
 
         <AddFlat
+          changePostStatus={this.handleChangePostStatus}
           renderForm={this.handleClickAddOrExitButton}
           createStatus={this.state.createStatus}
           add={this.handleSubmitAddNewFlatForm}
@@ -179,6 +193,7 @@ export default class FlatManager extends Component {
           remove={this.handleClickRemoveButton}
           save={this.handleClickSaveButton}
           changeInput={this.handleChange}
+          changePostStatus={this.handleChangePostStatus}
           flats={flats}
         />
       </div>

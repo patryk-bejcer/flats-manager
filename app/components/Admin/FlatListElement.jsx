@@ -4,7 +4,7 @@ import "../../scss/FlatListElement.scss";
 
 export default class FlatListElement extends Component {
   render() {
-    const { flat, changeInput, save, remove } = this.props;
+    const { flat, changeInput, changePostStatus, save, remove } = this.props;
     return (
       <>
         <td>
@@ -80,6 +80,17 @@ export default class FlatListElement extends Component {
             onChange={e => changeInput(e, flat.ID)}
           />{" "}
           m²
+        </td>
+
+        <td>
+          <select
+            name="post_status"
+            value={flat.post_status}
+            onChange={e => changePostStatus(e, flat.ID)}
+          >
+            <option value="publish">Opublikowany</option>
+            <option value="draft">Szkic</option>
+          </select>
         </td>
 
         <td>

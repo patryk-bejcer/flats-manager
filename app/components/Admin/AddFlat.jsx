@@ -13,7 +13,8 @@ export default class AddFlat extends Component {
     storey: "parter",
     area: "",
     addition: "strych",
-    additionArea: ""
+    additionArea: "",
+    postStatus: "draft"
   };
 
   handleChangeInput = e => {
@@ -33,8 +34,11 @@ export default class AddFlat extends Component {
       storey: this.state.storey,
       area: this.state.area,
       addition: this.state.addition,
-      additionArea: this.state.additionArea
+      additionArea: this.state.additionArea,
+      postStatus: this.state.postStatus
     };
+
+    console.log(newFlat);
 
     // eslint-disable-next-line react/prop-types
     this.props.add(newFlat);
@@ -50,12 +54,13 @@ export default class AddFlat extends Component {
       storey: "parter",
       area: "",
       addition: "-",
-      additionArea: ""
+      additionArea: "",
+      postStatus: "draft"
     });
   };
 
   render() {
-    const { renderForm, createStatus } = this.props;
+    const { renderForm, createStatus, changePostStatus } = this.props;
     const {
       name,
       number,
@@ -64,7 +69,8 @@ export default class AddFlat extends Component {
       storey,
       area,
       addition,
-      additionArea
+      additionArea,
+      postStatus
     } = this.state;
 
     return (
@@ -174,6 +180,17 @@ export default class AddFlat extends Component {
                         value={additionArea}
                         onChange={this.handleChangeInput}
                       />
+                    </td>
+
+                    <td>
+                      <select
+                        name="postStatus"
+                        value={postStatus}
+                        onChange={this.handleChangeInput}
+                      >
+                        <option value="publish">Opublikowany</option>
+                        <option value="draft">Szkic</option>
+                      </select>
                     </td>
 
                     <td style={{ paddingTop: 0 }}>

@@ -6,16 +6,15 @@ import FlatListElement from "./FlatListElement";
 
 export default class FlatList extends Component {
   render() {
-    const { changeInput, save, remove } = this.props;
-    let flats = this.props.flats.filter(
-      flat => flat.post_status === "publish" && flat.post_title !== "MIESZKANIA"
-    );
+    const { changeInput, changePostStatus, save, remove } = this.props;
+    let flats = this.props.flats;
     flats = flats.map(flat => (
       <tr className="single-flat-list-element" key={flat.ID}>
         <FlatListElement
           flat={flat}
           save={save}
           changeInput={changeInput}
+          changePostStatus={changePostStatus}
           remove={remove}
         />
       </tr>
