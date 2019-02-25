@@ -1,6 +1,10 @@
 .add-flat {
 
     td {
+        display: block;
+        text-align: center;
+        float: left;
+
         &:first {
             padding-left: 0;
         }
@@ -28,5 +32,5 @@
 }
 
 .add-flat .close-flat-btn {
-    margin-top: -.85em;
+    margin-top: -.65em;
 }

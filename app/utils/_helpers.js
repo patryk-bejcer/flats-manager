@@ -8,8 +8,8 @@ export function sortFlatList(a, b, column, order) {
       y = b.post_title.toLowerCase();
       break;
     case "price":
-      x = a.flat_meta_fields["cena-brutto"];
-      y = b.flat_meta_fields["cena-brutto"];
+      x = parseInt(a.flat_meta_fields["cena-brutto"]);
+      y = parseInt(b.flat_meta_fields["cena-brutto"]);
       break;
     case "status":
       x = a.flat_meta_fields["status"].toLowerCase();
@@ -31,6 +31,10 @@ export function sortFlatList(a, b, column, order) {
       x = parseInt(a.flat_meta_fields["powierzchnia-ogrodkastrychu"]);
       y = parseInt(b.flat_meta_fields["powierzchnia-ogrodkastrychu"]);
       break;
+    case "post_status":
+      x = a.post_status;
+      y = b.post_status;
+      break;
     default:
       x = a.post_title.toLowerCase();
       y = b.post_title.toLowerCase();
@@ -40,9 +44,11 @@ export function sortFlatList(a, b, column, order) {
   if (!order) {
     if (x < y) return 1;
     if (x > y) return -1;
+    if (x === '') return -1;
   } else {
     if (x < y) return -1;
     if (x > y) return 1;
+    if (x === '') return -1;
   }
   return 0;
 }

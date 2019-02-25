@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import React, { Component } from "react";
-import "./FlatListHeader.scss";
+import "../../scss/FlatListHeader.scss";
 
 export default class FlatListHeader extends Component {
   constructor(props) {
@@ -15,6 +15,7 @@ export default class FlatListHeader extends Component {
       { id: "area", name: "Powierzchnia" },
       { id: "garden", name: "Ogródek/Strych" },
       { id: "garden_area", name: "Ogródek/Strych" },
+      { id: "post_status", name: "Status" },
       { id: "action", name: "Akcja" }
     ];
   }

@@ -2,7 +2,7 @@
 /* eslint-disable no-console */
 /* eslint-disable no-undef */
 import React, { Component } from "react";
-import "./AddFlat.scss";
+import "../../scss/AddFlat.scss";
 
 export default class AddFlat extends Component {
   state = {
@@ -13,7 +13,8 @@ export default class AddFlat extends Component {
     storey: "parter",
     area: "",
     addition: "strych",
-    additionArea: ""
+    additionArea: "",
+    postStatus: "draft"
   };
 
   handleChangeInput = e => {
@@ -33,8 +34,11 @@ export default class AddFlat extends Component {
       storey: this.state.storey,
       area: this.state.area,
       addition: this.state.addition,
-      additionArea: this.state.additionArea
+      additionArea: this.state.additionArea,
+      postStatus: this.state.postStatus
     };
+
+    console.log(newFlat);
 
     // eslint-disable-next-line react/prop-types
     this.props.add(newFlat);
@@ -50,12 +54,13 @@ export default class AddFlat extends Component {
       storey: "parter",
       area: "",
       addition: "-",
-      additionArea: ""
+      additionArea: "",
+      postStatus: "draft"
     });
   };
 
   render() {
-    const { renderForm, createStatus } = this.props;
+    const { renderForm, createStatus, changePostStatus } = this.props;
     const {
       name,
       number,
@@ -64,7 +69,8 @@ export default class AddFlat extends Component {
       storey,
       area,
       addition,
-      additionArea
+      additionArea,
+      postStatus
     } = this.state;
 
     return (
@@ -91,7 +97,7 @@ export default class AddFlat extends Component {
               <table className="wp-list-table widefat striped flats-list-table">
                 <tbody>
                   <tr>
-                    <td>
+                    {/* <td>
                       <input
                         name="name"
                         type="text"
@@ -100,7 +106,7 @@ export default class AddFlat extends Component {
                         value={name}
                         required
                       />
-                    </td>
+                    </td> */}
                     <td>
                       <input
                         name="number"
@@ -114,7 +120,7 @@ export default class AddFlat extends Component {
                     <td>
                       <input
                         name="price"
-                        type="number"
+                        type="text"
                         onChange={this.handleChangeInput}
                         placeholder="Cena brutto"
                         value={price}
@@ -149,7 +155,7 @@ export default class AddFlat extends Component {
                       <input
                         placeholder="Powierzchnia (m²)"
                         name="area"
-                        type="number"
+                        type="text"
                         onChange={this.handleChangeInput}
                         value={area}
                       />
@@ -170,18 +176,32 @@ export default class AddFlat extends Component {
                       <input
                         placeholder="Powierzchnia piwnicy/ogrodu (m²)"
                         name="additionArea"
-                        type="number"
+                        type="text"
                         value={additionArea}
                         onChange={this.handleChangeInput}
                       />
                     </td>
 
                     <td>
+                      <select
+                        name="postStatus"
+                        value={postStatus}
+                        onChange={this.handleChangeInput}
+                      >
+                        <option value="publish">Opublikowany</option>
+                        <option value="draft">Szkic</option>
+                      </select>
+                    </td>
+
+                    <td style={{ paddingTop: 0 }}>
                       <button
-                        style={{ marginRight: 5 }}
+                        style={{
+                          marginRight: 5,
+                          marginTop: 6
+                        }}
                         className="button button-primary save alignright"
                       >
-                        Dodaj +
+                        Zapisz mieszkanie +
                       </button>
                     </td>
                   </tr>

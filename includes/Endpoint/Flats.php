@@ -110,7 +110,7 @@ class Flats
         register_rest_route($namespace, 'unpublish', array(
             array(
                 'methods' => \WP_REST_Server::EDITABLE,
-                'callback' => array($this, 'unpublish_flat'),
+                'callback' => array($this, 'remove_flat'),
                 'permission_callback' => array($this, 'flats_permissions_check'),
                 'args' => array(),
             ),
@@ -128,9 +128,9 @@ class Flats
         $flat = $request->get_param('flat');
         // Create post object
         $newFlat = array(
-            'post_title'    => wp_strip_all_tags($flat['name']),
+            'post_title'    => wp_strip_all_tags($flat['number']),
             'post_content'  => "",
-            'post_status'   => 'publish',
+            'post_status'   => $flat['postStatus'],
             'post_author'   => 1,
             'post_type' => 'mieszkania',
         );
@@ -167,7 +167,8 @@ class Flats
 
         $args = array(
             'post_type' => 'mieszkania',
-            'posts_per_page' => 100
+            'posts_per_page' => 100,
+            'post_status'    => array('publish', 'draft'),
         );
 
         $flats = get_posts($args);
@@ -206,6 +207,15 @@ class Flats
     {
 
         $flat = $request->get_param('flat');
+
+        $post = array(
+            'ID' => $flat['ID'],
+            'post_status' => $flat['post_status'],
+        );
+
+        // Update the post into the database
+        wp_update_post($post);
+
         $flat_meta_fields = $flat['flat_meta_fields'];
 
         foreach ($flat_meta_fields as $key => $value) {
@@ -225,13 +235,13 @@ class Flats
      * @param WP_REST_Request $request Full data about the request.
      * @return WP_Error|WP_REST_Request
      */
-    public function unpublish_flat($request)
+    public function remove_flat($request)
     {
         $id = $request->get_param('id');
 
         $post = array(
             'ID' => $id,
-            'post_status' => 'draft',
+            'post_status' => 'trash',
         );
 
         // Update the post into the database

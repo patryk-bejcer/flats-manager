@@ -2,10 +2,10 @@
 /* eslint-disable no-undef */
 import React, { Component } from "react";
 import fetchWP from "../../utils/fetchWP";
-import "./FlatManager.scss";
+import "../../scss/FlatManager.scss";
 import FlatList from "./FlatList";
 import SuccessMessage from "./SuccessMessage";
-import { sortFlatList } from "./_helpers";
+import { sortFlatList } from "../../utils/_helpers";
 import { confirmAlert } from "react-confirm-alert"; // Import
 import "react-confirm-alert/src/react-confirm-alert.css"; // Import css
 import AddFlat from "./AddFlat";
@@ -81,6 +81,19 @@ export default class FlatManager extends Component {
     const flats = this.state.flats.map(flat => {
       if (flat.ID == id) {
         flat.flat_meta_fields[e.target.name] = e.target.value;
+      }
+      return flat;
+    });
+    this.setState({
+      flats
+    });
+  };
+
+  handleChangePostStatus = (e, id) => {
+    console.log(e.target.value);
+    const flats = this.state.flats.map(flat => {
+      if (flat.ID == id) {
+        flat.post_status = e.target.value;
       }
       return flat;
     });
@@ -169,6 +182,7 @@ export default class FlatManager extends Component {
         <SuccessMessage type={this.state.type} alert={this.state.alert} />
 
         <AddFlat
+          changePostStatus={this.handleChangePostStatus}
           renderForm={this.handleClickAddOrExitButton}
           createStatus={this.state.createStatus}
           add={this.handleSubmitAddNewFlatForm}
@@ -179,6 +193,7 @@ export default class FlatManager extends Component {
           remove={this.handleClickRemoveButton}
           save={this.handleClickSaveButton}
           changeInput={this.handleChange}
+          changePostStatus={this.handleChangePostStatus}
           flats={flats}
         />
       </div>
