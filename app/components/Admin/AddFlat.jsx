@@ -2,7 +2,7 @@
 /* eslint-disable no-console */
 /* eslint-disable no-undef */
 import React, { Component } from "react";
-import "./AddFlat.scss";
+import "../../scss/AddFlat.scss";
 
 export default class AddFlat extends Component {
   state = {
@@ -114,7 +114,7 @@ export default class AddFlat extends Component {
                     <td>
                       <input
                         name="price"
-                        type="number"
+                        type="text"
                         onChange={this.handleChangeInput}
                         placeholder="Cena brutto"
                         value={price}
@@ -149,7 +149,7 @@ export default class AddFlat extends Component {
                       <input
                         placeholder="Powierzchnia (m²)"
                         name="area"
-                        type="number"
+                        type="text"
                         onChange={this.handleChangeInput}
                         value={area}
                       />
@@ -170,7 +170,7 @@ export default class AddFlat extends Component {
                       <input
                         placeholder="Powierzchnia piwnicy/ogrodu (m²)"
                         name="additionArea"
-                        type="number"
+                        type="text"
                         value={additionArea}
                         onChange={this.handleChangeInput}
                       />

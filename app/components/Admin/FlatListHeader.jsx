@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import React, { Component } from "react";
-import "./FlatListHeader.scss";
+import "../../scss/FlatListHeader.scss";
 
 export default class FlatListHeader extends Component {
   constructor(props) {

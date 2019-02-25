@@ -2,10 +2,10 @@
 /* eslint-disable no-undef */
 import React, { Component } from "react";
 import fetchWP from "../../utils/fetchWP";
-import "./FlatManager.scss";
+import "../../scss/FlatManager.scss";
 import FlatList from "./FlatList";
 import SuccessMessage from "./SuccessMessage";
-import { sortFlatList } from "./_helpers";
+import { sortFlatList } from "../../utils/_helpers";
 import { confirmAlert } from "react-confirm-alert"; // Import
 import "react-confirm-alert/src/react-confirm-alert.css"; // Import css
 import AddFlat from "./AddFlat";
