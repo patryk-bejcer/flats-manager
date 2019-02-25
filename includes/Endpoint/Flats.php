@@ -110,7 +110,7 @@ class Flats
         register_rest_route($namespace, 'unpublish', array(
             array(
                 'methods' => \WP_REST_Server::EDITABLE,
-                'callback' => array($this, 'unpublish_flat'),
+                'callback' => array($this, 'remove_flat'),
                 'permission_callback' => array($this, 'flats_permissions_check'),
                 'args' => array(),
             ),
@@ -128,7 +128,7 @@ class Flats
         $flat = $request->get_param('flat');
         // Create post object
         $newFlat = array(
-            'post_title'    => wp_strip_all_tags($flat['name']),
+            'post_title'    => wp_strip_all_tags($flat['number']),
             'post_content'  => "",
             'post_status'   => 'publish',
             'post_author'   => 1,
@@ -225,7 +225,7 @@ class Flats
      * @param WP_REST_Request $request Full data about the request.
      * @return WP_Error|WP_REST_Request
      */
-    public function unpublish_flat($request)
+    public function remove_flat($request)
     {
         $id = $request->get_param('id');
 

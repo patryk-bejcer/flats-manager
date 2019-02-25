@@ -91,7 +91,7 @@ export default class AddFlat extends Component {
               <table className="wp-list-table widefat striped flats-list-table">
                 <tbody>
                   <tr>
-                    <td>
+                    {/* <td>
                       <input
                         name="name"
                         type="text"
@@ -100,7 +100,7 @@ export default class AddFlat extends Component {
                         value={name}
                         required
                       />
-                    </td>
+                    </td> */}
                     <td>
                       <input
                         name="number"
@@ -179,7 +179,8 @@ export default class AddFlat extends Component {
                     <td style={{ paddingTop: 0 }}>
                       <button
                         style={{
-                          marginRight: 5
+                          marginRight: 5,
+                          marginTop: 6
                         }}
                         className="button button-primary save alignright"
                       >
