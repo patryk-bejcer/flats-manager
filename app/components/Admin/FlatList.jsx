@@ -6,11 +6,13 @@ import "./FlatList.scss";
 export default class FlatList extends Component {
   render() {
     const { changeInput, save, remove } = this.props;
-    let flats = this.props.flats.filter(flat => flat.post_status === "publish");
+    let flats = this.props.flats.filter(
+      flat => flat.post_status === "publish" && flat.post_title !== "MIESZKANIA"
+    );
     flats = flats.map(flat => (
       <tr key={flat.ID}>
         <td>
-          <b>{flat.post_title}</b>
+          <b>{flat.flat_meta_fields["nr-mieszkania"]}</b>
         </td>
         <td>
           <input
