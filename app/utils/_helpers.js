@@ -31,6 +31,10 @@ export function sortFlatList(a, b, column, order) {
       x = parseInt(a.flat_meta_fields["powierzchnia-ogrodkastrychu"]);
       y = parseInt(b.flat_meta_fields["powierzchnia-ogrodkastrychu"]);
       break;
+    case "post_status":
+      x = a.post_status;
+      y = b.post_status;
+      break;
     default:
       x = a.post_title.toLowerCase();
       y = b.post_title.toLowerCase();
